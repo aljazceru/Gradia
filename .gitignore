@@ -358,3 +358,6 @@ pyrightconfig.json
 /.vscode
 web/.idea/workspace.xml
 web/.idea/vcs.xml
+
+# RPM packaging lives in-repo
+!packaging/rpm/gradia.spec

@@ -84,6 +84,38 @@ If you'd like Gradia to **open automatically** after taking a screenshot, you ca
 
 ## How to build
 
+### Fedora (native RPM)
+
+Gradia builds natively on Fedora 43+. From a git checkout:
+
+```bash
+# install build dependencies
+sudo dnf builddep -y packaging/rpm/gradia.spec
+# build SRPM + RPM in ~/rpmbuild
+./packaging/rpm/build-rpm.sh
+sudo dnf install ~/rpmbuild/RPMS/*/gradia-*.rpm
+```
+
+For OCR support, also install `tesseract` and the language packs you need
+(e.g. `tesseract-langpack-eng`), or download models from the in-app
+preferences page.
+
+A plain (non-RPM) native build works too:
+
+```bash
+sudo dnf install meson gcc gettext blueprint-compiler \
+    "pkgconfig(gtk4)" "pkgconfig(libadwaita-1)" "pkgconfig(gtksourceview-5)" \
+    "pkgconfig(pygobject-3.0)" python3-pillow python3-pytesseract
+meson setup build --prefix=/usr
+meson compile -C build
+sudo meson install -C build
+```
+
+OCR paths are auto-detected: builds with prefix `/app` (Flatpak) use the
+bundled tesseract, native builds use `/usr/bin/tesseract` and
+`/usr/share/tesseract/tessdata`. Override with `-Docr-tesseract-cmd=` and
+`-Docr-tessdata-dir=`.
+
 ### GNOME Builder
 
 1. Install Builder from [Flathub](https://flathub.org/apps/org.gnome.Builder).
