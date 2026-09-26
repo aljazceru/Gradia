@@ -31,6 +31,7 @@ if command -v rpmdev-setuptree >/dev/null; then
 else
     mkdir -p ~/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 fi
+TARBALL="gradia-${VERSION}.tar.gz"
 TARBALL_PATH="$HOME/rpmbuild/SOURCES/${TARBALL}"
 
 echo "==> Creating source tarball ${TARBALL} (includes uncommitted changes)"
