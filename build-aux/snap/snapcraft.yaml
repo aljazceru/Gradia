@@ -28,7 +28,6 @@ parts:
     plugin: python
     source: .
     python-packages:
-      - Wand==0.6.13
       - Pillow
       - pytesseract
     stage:
