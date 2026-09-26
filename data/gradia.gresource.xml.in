@@ -28,6 +28,9 @@
   </gresource>
   <gresource prefix="/be/alexandervanhee/gradia">
     <file>source-styles/builder-dark.xml</file>
+    <file>source-styles/rose-pine.xml</file>
+    <file>source-styles/rose-pine-moon.xml</file>
+    <file>source-styles/rose-pine-dawn.xml</file>
     <file>source-styles/ubuntu.xml</file>
     <file>source-styles/vscode-dark.xml</file>
   </gresource>
