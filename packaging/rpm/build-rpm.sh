@@ -26,21 +26,21 @@ command -v rpmbuild >/dev/null || {
     exit 1
 }
 
-echo "==> Creating source tarball gradia-${VERSION}.tar.gz (includes uncommitted changes)"
-TARBALL="gradia-${VERSION}.tar.gz"
-# Tar the worktree (tracked + new, non-ignored files) so uncommitted
-# changes are included, matching the Gradia-%{version} directory the spec expects.
-# (Use "git ls-files" only if you prefer committed state.)
-git ls-files --cached --others --exclude-standard -z | tar --null -czf "packaging/rpm/${TARBALL}" \
-    --transform "s,^,Gradia-${VERSION}/," -T -
-
 if command -v rpmdev-setuptree >/dev/null; then
     rpmdev-setuptree
 else
     mkdir -p ~/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 fi
+TARBALL_PATH="$HOME/rpmbuild/SOURCES/${TARBALL}"
+
+echo "==> Creating source tarball ${TARBALL} (includes uncommitted changes)"
+# Tar the worktree (tracked + new, non-ignored files) so uncommitted
+# changes are included, matching the Gradia-%{version} directory the spec expects.
+# (Use "git ls-files" only if you prefer committed state.)
+git ls-files --cached --others --exclude-standard -z | tar --null -czf "${TARBALL_PATH}" \
+    --transform "s,^,Gradia-${VERSION}/," -T -
+
 cp "$SPEC" ~/rpmbuild/SPECS/
-cp "packaging/rpm/${TARBALL}" ~/rpmbuild/SOURCES/
 
 echo "==> Building RPM"
 rpmbuild -ba ~/rpmbuild/SPECS/gradia.spec
