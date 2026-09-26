@@ -45,7 +45,10 @@ class OCR:
     def __init__(self, window=None):
         self.tesseract_cmd = ocr_tesseract_cmd
         self.original_tessdata_dir = ocr_original_tessdata
-        self.user_tessdata_dir = os.path.expanduser(f"~/.var/app/{app_id}/data/tessdata")
+        if os.getenv("FLATPAK_ID") or Path("/.flatpak-info").exists():
+            self.user_tessdata_dir = os.path.expanduser(f"~/.var/app/{app_id}/data/tessdata")
+        else:
+            self.user_tessdata_dir = os.path.join(GLib.get_user_data_dir(), "gradia", "tessdata")
         self.window = window
 
         pytesseract.pytesseract.tesseract_cmd = self.tesseract_cmd

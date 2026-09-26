@@ -62,10 +62,29 @@ else
 endif
 
 # OCR Directories
-OCR_TESSERACT_CMD = '/app/bin/tesseract'
-OCR_ORIGINAL_TESSDATA_DIR = '/app/share/tessdata'
-
+#
+# Flatpak bundles tesseract under /app, while native builds (distro packages,
+# local installs) use the system tesseract layout. Paths can be overridden
+# explicitly with -Docr-tesseract-cmd / -Docr-tessdata-dir.
 enable_ocr = get_option('enable-ocr')
+ocr_tesseract_cmd = get_option('ocr-tesseract-cmd')
+ocr_tessdata_dir = get_option('ocr-tessdata-dir')
+
+if get_option('prefix') == '/app'
+  if ocr_tesseract_cmd == ''
+    ocr_tesseract_cmd = '/app/bin/tesseract'
+  endif
+  if ocr_tessdata_dir == ''
+    ocr_tessdata_dir = '/app/share/tessdata'
+  endif
+else
+  if ocr_tesseract_cmd == ''
+    ocr_tesseract_cmd = '/usr/bin/tesseract'
+  endif
+  if ocr_tessdata_dir == ''
+    ocr_tessdata_dir = '/usr/share/tesseract/tessdata'
+  endif
+endif
 
 # Install configuration data
 conf = configuration_data()
@@ -81,8 +100,8 @@ conf.set('SCHEMAS_DIR', PKGDATA_DIR)
 conf.set('SOURCE_DIR', meson.current_source_dir())
 conf.set('BUILD_DIR', meson.current_build_dir())
 conf.set('ENABLE_OCR', enable_ocr)
-conf.set('OCR_TESSERACT_CMD', OCR_TESSERACT_CMD)
-conf.set('OCR_ORIGINAL_TESSDATA_DIR', OCR_ORIGINAL_TESSDATA_DIR)
+conf.set('OCR_TESSERACT_CMD', ocr_tesseract_cmd)
+conf.set('OCR_ORIGINAL_TESSDATA_DIR', ocr_tessdata_dir)
 
 # Install project information
 conf.set('RELEASE_VER', meson.project_version())

@@ -1,1 +1,3 @@
 option('enable-ocr', type: 'boolean', value: true, description: 'Enable OCR functionality')
+option('ocr-tesseract-cmd', type: 'string', value: '', description: 'Path to the tesseract binary used for OCR (auto-detected if empty)')
+option('ocr-tessdata-dir', type: 'string', value: '', description: 'Path to the directory containing system tesseract models (auto-detected if empty)')
