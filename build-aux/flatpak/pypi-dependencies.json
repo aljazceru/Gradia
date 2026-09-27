@@ -3,7 +3,7 @@
     "buildsystem": "simple",
     "build-commands": [
       "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"pybind11\" --no-build-isolation",
-      "PYTHONPATH=\"${FLATPAK_DEST}/lib/python3.13/site-packages:${PYTHONPATH}\" pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"Pillow\" \"pytesseract\" --no-build-isolation"
+      "PYTHONPATH=\"${FLATPAK_DEST}/lib/python3.14/site-packages:${PYTHONPATH}\" pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"Pillow\" \"pytesseract\" --no-build-isolation"
     ],
     "sources": [
       {
